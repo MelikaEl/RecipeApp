@@ -8,18 +8,9 @@ function Cuisine() {
   let params = useParams();
 
   const getCuisine = async (name) => {
-    const check = localStorage.getItem("cuisine");
-    if (check) {
-      setCuisine(JSON.parse(check));
-    } else {
-      const api = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&cuisine=${name}`
-      );
-      const data = await api.json();
-      localStorage.setItem("cuisine", JSON.stringify(data.recipes));
-      setCuisine(data.recipes);
-      console.log(data.recipes);
-    }
+    const data = await fetch(
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=1fd03120a9c7483ba1bb948687e29dea&cuisine=${name}`
+    );
 
     const recipes = await data.json();
     setCuisine(recipes.results); //results dar inga esme gharardadi ast ke dar site spoonacular, backend on ra tarif karde
@@ -30,19 +21,28 @@ function Cuisine() {
     console.log(params.type);
   }, [params.type]);
 
-  return <Grid>
-    {cuisine.map((item) => {
-      return(
-        <Card key={item.id}>
-          <img src={item.image} alt="" />
-          <h4>{item.title}</h4>
-        </Card>
-      );
-    })}
-  </Grid>;
+  return (
+    <Grid
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {cuisine.map((item) => {
+        return (
+          <Card key={item.id}>
+            <Link to={"/recipe/" + item.id}>
+              <img src={item.image} alt="" />
+              <h4>{item.title}</h4>
+            </Link>
+          </Card>
+        );
+      })}
+    </Grid>
+  );
 }
 
-const Grid = styled.div`
+const Grid = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   grid-gap: 3rem;

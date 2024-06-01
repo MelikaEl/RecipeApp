@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import { Link } from "react-router-dom";
 
 function Popular() {
   const [popular, setPopular] = useState([]);
@@ -21,7 +22,7 @@ function Popular() {
       );
       const data = await api.json();
       localStorage.setItem("popular", JSON.stringify(data.recipes));
-      setPopular(data.recipes);//recipes dar inga esme gharardadi ast ke dar site spoonacular, backend on ra tarif karde
+      setPopular(data.recipes); //recipes dar inga esme gharardadi ast ke dar site spoonacular, backend on ra tarif karde
       console.log(data.recipes);
     }
   };
@@ -43,9 +44,11 @@ function Popular() {
             return (
               <SplideSlide key={recipe.id}>
                 <Card key={recipe.id}>
-                  <p>{recipe.title}</p>
-                  <img src={recipe.image} alt={recipe.title} />
-                  <Gradient />
+                  <Link to={"/recipe/" + recipe.id}>
+                    <p>{recipe.title}</p>
+                    <img src={recipe.image} alt={recipe.title} />
+                    <Gradient />
+                  </Link>
                 </Card>
               </SplideSlide>
             );

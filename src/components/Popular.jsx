@@ -11,23 +11,7 @@ function Popular() {
     getPopular();
   }, []);
 
-  const getPopular = async (name) => {
-    const check = localStorage.getItem("popular");
 
-    if (check) {
-      setPopular(JSON.parse(check));
-    } else {
-      const api = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=1fd03120a9c7483ba1bb948687e29dea&cuisine=${name}`
-      );
-      const data = await api.json();
-      localStorage.setItem("popular", JSON.stringify(data.recipes));
-      setPopular(data.recipes); //recipes dar inga esme gharardadi ast ke dar site spoonacular, backend on ra tarif karde
-      console.log(data.recipes);
-    }
-  };
-
-  /*
    const getPopular = async () => {
     const check = localStorage.getItem("popular");
 
@@ -43,7 +27,7 @@ function Popular() {
       console.log(data.recipes);
     }
   };
-  */
+  
 
   return (
     <div>

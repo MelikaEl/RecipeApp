@@ -25,6 +25,8 @@ function Popular() {
       localStorage.setItem("popular", JSON.stringify(data.recipes));
       setPopular(data.recipes); //recipes dar inga esme gharardadi ast ke dar site spoonacular, backend on ra tarif karde
       console.log(data.recipes);
+
+      console.log("API Key:", process.env.REACT_APP_API_KEY);
     }
   };
   
